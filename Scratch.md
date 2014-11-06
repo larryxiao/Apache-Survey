@@ -27,3 +27,18 @@
 
 # Discussion
 repartitioning, reduce overhead (locality, communication)
+
+*   model in head
+    *   a cluster manager manages the cluster's resources 
+        *   eg. add / remove nodes, fault tolerance, replication, monitoring, scheduling
+    *   when a high priority workload arrives, can allocate more resources to it
+        *   eg. scale down low priority workloads, redistribute resources
+        *   scaling down low priority workload, use provided interface by the application
+            *   to guarantee a fast, consistent transition
+            1.  can repartition data, and fit in smaller partitions
+                *   pros: can precisely scale down to use 1/2 of the resourecs, and continue to run
+                *   cons: need to manage states and data, everytime scaling up or down
+            2.  can just occupy 1/2 of the resourecs at a time, and wait in line
+                *   pros: simple plan, which works
+                *   cons: can be slow (but since it's unimportant, offline task)
+        *   redistributing resources
